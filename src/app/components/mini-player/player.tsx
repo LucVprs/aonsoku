@@ -2,7 +2,11 @@ import clsx from 'clsx'
 import { memo } from 'react'
 import { ResizeHandler } from '@/app/components/icons/resize-handler'
 import { useSongColor } from '@/store/player.store'
-import { MiniPlayerControls, MiniPlayerLikeButton } from './controls'
+import {
+  MiniPlayerControls,
+  MiniPlayerLikeButton,
+  MiniPlayerRatingStars,
+} from './controls'
 import { MiniPlayerProgress } from './progress'
 import { MiniPlayerSongImage } from './song-image'
 import { MiniPlayerSongTitle } from './song-title'
@@ -10,6 +14,7 @@ import { MiniPlayerVolume } from './volume'
 
 const MemoMiniPlayerControls = memo(MiniPlayerControls)
 const MemoMiniPlayerLikeButton = memo(MiniPlayerLikeButton)
+const MemoMiniPlayerRatingStars = memo(MiniPlayerRatingStars)
 const MemoMiniPlayerProgress = memo(MiniPlayerProgress)
 const MemoMiniPlayerSongImage = memo(MiniPlayerSongImage)
 const MemoMiniPlayerSongTitle = memo(MiniPlayerSongTitle)
@@ -74,6 +79,7 @@ export function MiniPlayer() {
           )}
         >
           <MemoMiniPlayerSongTitle />
+          <MemoMiniPlayerRatingStars />
           <MemoMiniPlayerLikeButton />
         </div>
         <div className="hidden mini-player:flex">

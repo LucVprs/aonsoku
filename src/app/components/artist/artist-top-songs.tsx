@@ -29,6 +29,7 @@ export default function ArtistTopSongs({ topSongs, artist }: TopSongsProps) {
     'playCount',
     'played',
     'contentType',
+    'userRating',
     'select',
   ]
 

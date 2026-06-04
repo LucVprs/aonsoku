@@ -21,5 +21,6 @@ declare global {
     DISABLE_IMAGE_CACHE_TOGGLE: boolean | undefined
     DISABLE_DOWNLOADS: boolean | undefined
     DISABLE_LRCLIB: boolean | undefined
+    HIDE_RATING: boolean | undefined
   }
 }

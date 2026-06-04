@@ -10,6 +10,7 @@ import {
 } from 'lucide-react'
 import RepeatOne from '@/app/components/icons/repeat-one'
 import { Button } from '@/app/components/ui/button'
+import { RatingStars } from '@/app/components/ui/rating-stars'
 import { cn } from '@/lib/utils'
 import {
   usePlayerActions,
@@ -18,8 +19,11 @@ import {
   usePlayerPrevAndNext,
   usePlayerShuffle,
   usePlayerSongStarred,
+  usePlayerStore,
 } from '@/store/player.store'
 import { LoopState } from '@/types/playerContext'
+
+const HIDE_RATING = window.HIDE_RATING ?? true
 
 export function MiniPlayerControls() {
   const isPlaying = usePlayerIsPlaying()
@@ -146,6 +150,24 @@ export function MiniPlayerLikeButton() {
         size={18}
       />
     </Button>
+  )
+}
+
+export function MiniPlayerRatingStars() {
+  // Rating of the track currently playing
+  const userRating = usePlayerStore(
+    (state) => state.songlist.currentSong.userRating ?? 0,
+  )
+  const { rateCurrentSong } = usePlayerActions()
+
+  if (HIDE_RATING) return null
+
+  return (
+    <RatingStars
+      value={userRating}
+      onChange={rateCurrentSong}
+      className="p-[9px] mini-player:hidden"
+    />
   )
 }
 

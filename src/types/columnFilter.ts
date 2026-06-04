@@ -12,5 +12,6 @@ export type ColumnFilter =
   | 'bitRate'
   | 'contentType'
   | 'starred'
+  | 'userRating'
   | 'select'
   | 'remove'

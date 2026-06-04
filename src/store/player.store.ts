@@ -699,6 +699,26 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
                 state.songlist.currentList = songList
               })
             },
+            rateSongInQueue: (id, rating) => {
+              const { currentList } = get().songlist
+              const { mediaType } = get().playerState
+
+              if (currentList.length === 0 && mediaType !== 'song') return
+
+              const songIndex = currentList.findIndex((song) => song.id === id)
+              if (songIndex === -1) return
+
+              // Update the queued track rating to keep the queue in sync
+              const songList = [...currentList]
+              songList[songIndex] = {
+                ...songList[songIndex],
+                userRating: rating,
+              }
+
+              set((state) => {
+                state.songlist.currentList = songList
+              })
+            },
             starCurrentSong: async () => {
               const { currentList, currentSongIndex } = get().songlist
               const { mediaType } = get().playerState
@@ -716,6 +736,26 @@ export const usePlayerStore = createWithEqualityFn<IPlayerContext>()(
               songList[currentSongIndex] = {
                 ...songList[currentSongIndex],
                 starred: isSongStarred ? undefined : new Date().toISOString(),
+              }
+
+              set((state) => {
+                state.songlist.currentList = songList
+              })
+            },
+            rateCurrentSong: async (rating) => {
+              const { currentList, currentSongIndex } = get().songlist
+              const { mediaType } = get().playerState
+
+              if (currentList.length === 0 && mediaType !== 'song') return
+
+              // Persist the rating on the server, then update the queue
+              const { id } = get().songlist.currentSong
+              await subsonic.rating.setRating({ id, rating })
+
+              const songList = [...currentList]
+              songList[currentSongIndex] = {
+                ...songList[currentSongIndex],
+                userRating: rating,
               }
 
               set((state) => {

@@ -42,6 +42,7 @@ export default function Playlist() {
     'duration',
     'playCount',
     'contentType',
+    'userRating',
     'select',
   ]
 

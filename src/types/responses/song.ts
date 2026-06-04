@@ -69,6 +69,7 @@ export interface ISong {
   played?: string
   bpm: number
   starred?: string
+  userRating?: number
   comment: string
   sortName: string
   mediaType: string

@@ -41,6 +41,7 @@ export default function SongList() {
     'playCount',
     'played',
     'contentType',
+    'userRating',
     'select',
   ]
 

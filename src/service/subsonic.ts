@@ -6,6 +6,7 @@ import { lyrics } from './lyrics'
 import { ping } from './ping'
 import { playlists } from './playlists'
 import { radios } from './radios'
+import { rating } from './rating'
 import { scrobble } from './scrobble'
 import { search } from './search'
 import { songs } from './songs'
@@ -19,6 +20,7 @@ export const subsonic = {
   ping,
   playlists,
   radios,
+  rating,
   scrobble,
   search,
   songs,

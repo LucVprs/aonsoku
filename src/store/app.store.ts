@@ -29,6 +29,7 @@ const {
   HIDE_FAVORITES_SECTION,
   HIDE_PLAYLISTS_SECTION,
   HIDE_RADIOS_SECTION,
+  HIDE_RATING,
   SERVER_TYPE,
   IMAGE_CACHE_ENABLED,
 } = window
@@ -223,6 +224,12 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
                 state.pages.mediaCacheEnabled = value
               })
             },
+            hideRating: HIDE_RATING ?? true,
+            setHideRating: (value) => {
+              set((state) => {
+                state.pages.hideRating = value
+              })
+            },
             isAllSectionsHidden: () => {
               const {
                 hideArtistsSection,
@@ -389,6 +396,7 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
                 state.pages.artistsPageViewType = 'table'
                 state.pages.homeAutoScrollEnabled = true
                 state.pages.homeLoopEnabled = true
+                state.pages.hideRating = HIDE_RATING ?? true
                 state.podcasts.active = false
                 state.podcasts.serviceUrl = ''
                 state.podcasts.useDefaultUser = true
@@ -423,6 +431,7 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
             let enableImageCache = false
             let enableLyricsCache = true
             let enableMediaCache = true
+            let hideRating = true
 
             if (persisted && persisted.pages) {
               hideArtistsSection = persisted.pages.hideArtistsSection ?? false
@@ -437,6 +446,7 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
                 persisted.pages.imagesCacheLayerEnabled ?? false
               enableLyricsCache = persisted.pages.lyricsCacheEnabled ?? true
               enableMediaCache = persisted.pages.mediaCacheEnabled ?? true
+              hideRating = persisted.pages.hideRating ?? true
             }
             if (HIDE_ARTISTS_SECTION !== undefined) {
               hideArtistsSection = HIDE_ARTISTS_SECTION
@@ -459,6 +469,9 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
             if (IMAGE_CACHE_ENABLED !== undefined) {
               enableImageCache = IMAGE_CACHE_ENABLED
             }
+            if (HIDE_RATING !== undefined) {
+              hideRating = HIDE_RATING
+            }
 
             if (hasValidConfig) {
               const newState = {
@@ -478,6 +491,7 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
                   imagesCacheLayerEnabled: enableImageCache,
                   lyricsCacheEnabled: enableLyricsCache,
                   mediaCacheEnabled: enableMediaCache,
+                  hideRating,
                 },
               }
 
@@ -502,6 +516,7 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
                 imagesCacheLayerEnabled: enableImageCache,
                 lyricsCacheEnabled: enableLyricsCache,
                 mediaCacheEnabled: enableMediaCache,
+                hideRating,
               },
             }
 

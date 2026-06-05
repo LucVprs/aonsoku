@@ -2,6 +2,7 @@ import { CachesContent } from './caches'
 import { FeatureContent } from './features'
 import { HomeContent } from './home'
 import { PodcastContent } from './podcast'
+import { RatingContent } from './rating'
 import { SidebarContent } from './sidebar'
 
 export function Content() {
@@ -12,6 +13,7 @@ export function Content() {
       <FeatureContent />
       <PodcastContent />
       <CachesContent />
+      <RatingContent />
     </div>
   )
 }

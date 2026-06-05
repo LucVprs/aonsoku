@@ -28,9 +28,7 @@ const MemoDataTableColumnHeader = memo(
   DataTableColumnHeader,
 ) as typeof DataTableColumnHeader
 
-const HIDE_RATING = window.HIDE_RATING ?? true
-
-export function songsColumns(): ColumnDefType<ISong>[] {
+export function songsColumns(hideRating: boolean): ColumnDefType<ISong>[] {
   return [
     {
       id: 'index',
@@ -246,7 +244,7 @@ export function songsColumns(): ColumnDefType<ISong>[] {
       },
     },
     // Rating column, omitted entirely when the rating UI is hidden
-    ...(HIDE_RATING
+    ...(hideRating
       ? []
       : ([
           {

@@ -5,17 +5,17 @@ import { SongQualityBadge } from '@/app/components/song/quality-badge'
 import { Badge } from '@/app/components/ui/badge'
 import { RatingStars } from '@/app/components/ui/rating-stars'
 import { usePlayerActions, usePlayerStore } from '@/store/player.store'
+import { useAppPages } from '@/store/app.store'
 import { ISong } from '@/types/responses/song'
 import { ALBUM_ARTISTS_MAX_NUMBER } from '@/utils/multipleArtists'
 import { FullscreenSongImage } from './song-image'
-
-const HIDE_RATING = window.HIDE_RATING ?? true
 
 const MemoFullscreenSongImage = memo(FullscreenSongImage)
 
 export function SongInfo() {
   const currentSong = usePlayerStore((state) => state.songlist.currentSong)
   const { rateCurrentSong } = usePlayerActions()
+  const { hideRating } = useAppPages()
 
   return (
     <div className="flex items-center justify-start h-full min-h-full max-h-full gap-4 2xl:gap-6 flex-1 pt-2 overflow-hidden">
@@ -44,7 +44,7 @@ export function SongInfo() {
           <SongQualityBadge song={currentSong} variant="neutral" />
         </div>
         {/* Rating row, below the badges */}
-        {!HIDE_RATING && (
+        {!hideRating && (
           <div className="flex mt-2 2xl:mt-3">
             <RatingStars
               value={currentSong.userRating ?? 0}

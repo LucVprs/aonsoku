@@ -10,6 +10,7 @@ import { DataTableList } from '@/app/components/ui/data-table-list'
 import { useTotalSongs } from '@/app/hooks/use-total-songs'
 import { songsColumns } from '@/app/tables/songs-columns'
 import { getArtistAllSongs, songsSearch } from '@/queries/songs'
+import { useAppPages } from '@/store/app.store'
 import { usePlayerActions } from '@/store/player.store'
 import { ColumnFilter } from '@/types/columnFilter'
 import { AlbumsFilters, AlbumsSearchParams } from '@/utils/albumsFilter'
@@ -21,9 +22,10 @@ const DEFAULT_OFFSET = 100
 export default function SongList() {
   const { t } = useTranslation()
   const { setSongList } = usePlayerActions()
+  const { hideRating } = useAppPages()
   const [searchParams] = useSearchParams()
   const { getSearchParam } = new SearchParamsHandler(searchParams)
-  const columns = songsColumns()
+  const columns = songsColumns(hideRating)
 
   const filter = getSearchParam<string>(AlbumsSearchParams.MainFilter, '')
   const query = getSearchParam<string>(AlbumsSearchParams.Query, '')

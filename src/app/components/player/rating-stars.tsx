@@ -1,7 +1,6 @@
 import { RatingStars } from '@/app/components/ui/rating-stars'
+import { useAppPages } from '@/store/app.store'
 import { usePlayerActions, usePlayerStore } from '@/store/player.store'
-
-const HIDE_RATING = window.HIDE_RATING ?? true
 
 interface PlayerRatingStarsProps {
   disabled: boolean
@@ -13,8 +12,9 @@ export function PlayerRatingStars({ disabled }: PlayerRatingStarsProps) {
     (state) => state.songlist.currentSong.userRating ?? 0,
   )
   const { rateCurrentSong } = usePlayerActions()
+  const { hideRating } = useAppPages()
 
-  if (HIDE_RATING) return null
+  if (hideRating) return null
 
   return (
     <RatingStars

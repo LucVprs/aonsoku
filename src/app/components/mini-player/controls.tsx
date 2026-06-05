@@ -12,6 +12,7 @@ import RepeatOne from '@/app/components/icons/repeat-one'
 import { Button } from '@/app/components/ui/button'
 import { RatingStars } from '@/app/components/ui/rating-stars'
 import { cn } from '@/lib/utils'
+import { useAppPages } from '@/store/app.store'
 import {
   usePlayerActions,
   usePlayerIsPlaying,
@@ -22,8 +23,6 @@ import {
   usePlayerStore,
 } from '@/store/player.store'
 import { LoopState } from '@/types/playerContext'
-
-const HIDE_RATING = window.HIDE_RATING ?? true
 
 export function MiniPlayerControls() {
   const isPlaying = usePlayerIsPlaying()
@@ -159,8 +158,9 @@ export function MiniPlayerRatingStars() {
     (state) => state.songlist.currentSong.userRating ?? 0,
   )
   const { rateCurrentSong } = usePlayerActions()
+  const { hideRating } = useAppPages()
 
-  if (HIDE_RATING) return null
+  if (hideRating) return null
 
   return (
     <RatingStars

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { DataTable } from '@/app/components/ui/data-table'
 import { songsColumns } from '@/app/tables/songs-columns'
 import { ROUTES } from '@/routes/routesList'
+import { useAppPages } from '@/store/app.store'
 import { usePlayerActions } from '@/store/player.store'
 import { ColumnFilter } from '@/types/columnFilter'
 import { IArtist } from '@/types/responses/artist'
@@ -16,7 +17,8 @@ interface TopSongsProps {
 export default function ArtistTopSongs({ topSongs, artist }: TopSongsProps) {
   const { t } = useTranslation()
   const { setSongList } = usePlayerActions()
-  const columns = songsColumns()
+  const { hideRating } = useAppPages()
+  const columns = songsColumns(hideRating)
   const topTenSongs = topSongs.length > 10 ? topSongs.slice(0, 10) : topSongs
   const { id, name } = artist
 

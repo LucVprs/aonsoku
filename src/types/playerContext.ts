@@ -171,6 +171,8 @@ export interface IPlayerActions {
   checkIsSongStarred: () => void
   starSongInQueue: (id: string) => void
   starCurrentSong: () => Promise<void>
+  rateSongInQueue: (id: string, rating: number) => void
+  rateCurrentSong: (rating: number) => Promise<void>
   setPlayingState: (status: boolean) => void
   togglePlayPause: () => void
   toggleLoop: () => void

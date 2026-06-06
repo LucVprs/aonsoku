@@ -1,10 +1,11 @@
-import { ClockIcon, HeartIcon } from 'lucide-react'
+import { ClockIcon, HeartIcon, StarIcon } from 'lucide-react'
 import { memo } from 'react'
 
 import { ArtistLink, ArtistsLinks } from '@/app/components/song/artist-link'
 import { SongQualityBadge } from '@/app/components/song/quality-badge'
 import { TableAlbumName } from '@/app/components/table/album-name'
 import PlaySongButton from '@/app/components/table/play-button'
+import { TableRatingButton } from '@/app/components/table/rating-button'
 import { SongTableActions } from '@/app/components/table/song-actions'
 import { TableSongTitle } from '@/app/components/table/song-title'
 import { DataTableColumnHeader } from '@/app/components/ui/data-table-column-header'
@@ -22,9 +23,12 @@ const MemoSongQualityBadge = memo(SongQualityBadge)
 const MemoPlaySongButton = memo(PlaySongButton)
 const MemoTableSongTitle = memo(TableSongTitle)
 const MemoSongTableActions = memo(SongTableActions)
+const MemoTableRatingButton = memo(TableRatingButton)
 const MemoDataTableColumnHeader = memo(
   DataTableColumnHeader,
 ) as typeof DataTableColumnHeader
+
+const HIDE_RATING = window.HIDE_RATING ?? true
 
 export function songsColumns(): ColumnDefType<ISong>[] {
   return [
@@ -241,6 +245,31 @@ export function songsColumns(): ColumnDefType<ISong>[] {
         return <MemoSongQualityBadge song={row.original} />
       },
     },
+    // Rating column, omitted entirely when the rating UI is hidden
+    ...(HIDE_RATING
+      ? []
+      : ([
+          {
+            id: 'userRating',
+            accessorKey: 'userRating',
+            style: {
+              width: 180,
+              maxWidth: 180,
+            },
+            className: 'hidden lg:flex',
+            header: () => (
+              <MemoSimpleTooltip text={i18n.t('table.columns.rating')}>
+                <StarIcon className="w-4 h-4 mr-2" />
+              </MemoSimpleTooltip>
+            ),
+            cell: ({ row }) => (
+              <MemoTableRatingButton
+                entityId={row.original.id}
+                userRating={row.original.userRating ?? 0}
+              />
+            ),
+          },
+        ] as ColumnDefType<ISong>[])),
     {
       id: 'select',
       style: {

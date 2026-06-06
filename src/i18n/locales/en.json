@@ -331,6 +331,7 @@
       "codec": "Codec",
       "path": "Path",
       "favorite": "Favorite",
+      "rating": "Rating",
       "recordLabel": "Record label",
       "discNumber": "Disc number",
       "trackGain": "Track gain",

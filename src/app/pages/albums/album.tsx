@@ -84,6 +84,7 @@ export default function Album() {
     'played',
     'bitRate',
     'contentType',
+    'userRating',
     'select',
   ]
 

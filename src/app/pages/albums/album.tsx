@@ -19,6 +19,7 @@ import {
 import ErrorPage from '@/app/pages/error-page'
 import { songsColumns } from '@/app/tables/songs-columns'
 import { ROUTES } from '@/routes/routesList'
+import { useAppPages } from '@/store/app.store'
 import { usePlayerActions } from '@/store/player.store'
 import { ColumnFilter } from '@/types/columnFilter'
 import { Albums } from '@/types/responses/album'
@@ -29,6 +30,7 @@ export default function Album() {
   const { albumId } = useParams() as { albumId: string }
   const { setSongList } = usePlayerActions()
   const { t } = useTranslation()
+  const { hideRating } = useAppPages()
 
   const {
     data: album,
@@ -49,7 +51,7 @@ export default function Album() {
   }
   if (!album) return <AlbumFallback />
 
-  const columns = songsColumns()
+  const columns = songsColumns(hideRating)
 
   const albumDuration = album.duration
     ? convertSecondsToHumanRead(album.duration)

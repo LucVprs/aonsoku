@@ -41,6 +41,8 @@ interface IAppPages {
   setLyricsCacheEnabled: (value: boolean) => void
   mediaCacheEnabled: boolean
   setMediaCacheEnabled: (value: boolean) => void
+  hideRating: boolean
+  setHideRating: (value: boolean) => void
   isAllSectionsHidden: () => boolean
   homeAutoScrollEnabled: boolean
   setHomeAutoScrollEnabled: (value: boolean) => void

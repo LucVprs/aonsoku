@@ -479,6 +479,14 @@
           "label": "Activer la boucle du carrousel",
           "info": "Lorsque ceci est activé, le carrousel de la page d'accueil retournera à la première chanson après avoir atteint la fin."
         }
+      },
+      "rating": {
+        "group": "Classement",
+        "description": "Afficher ou masquer le classement.",
+        "show": {
+          "label": "Afficher la notation par étoiles",
+          "info": "Lorsque cette option est activée, la notation par étoiles est affichée."
+        }
       }
     },
     "label": "Paramètres",

@@ -787,6 +787,14 @@
           "label": "Enable Carousel Loop",
           "info": "When enabled, the home page carousel will loop back to the first song after reaching the end."
         }
+      },
+      "rating": {
+        "group": "Rating",
+        "description": "Show or hide the user rating.",
+        "show": {
+          "label": "Show Rating",
+          "info": "When enabled, star rating controls will be displayed."
+        }
       }
     },
     "accounts": {

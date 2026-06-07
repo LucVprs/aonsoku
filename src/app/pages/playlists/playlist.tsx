@@ -12,6 +12,7 @@ import { DataTable } from '@/app/components/ui/data-table'
 import ErrorPage from '@/app/pages/error-page'
 import { songsColumns } from '@/app/tables/songs-columns'
 import { subsonic } from '@/service/subsonic'
+import { useAppPages } from '@/store/app.store'
 import { usePlayerActions } from '@/store/player.store'
 import { ColumnFilter } from '@/types/columnFilter'
 import { convertSecondsToHumanRead } from '@/utils/convertSecondsToTime'
@@ -20,7 +21,8 @@ import { queryKeys } from '@/utils/queryKeys'
 export default function Playlist() {
   const { playlistId } = useParams() as { playlistId: string }
   const { t } = useTranslation()
-  const columns = songsColumns()
+  const { hideRating } = useAppPages()
+  const columns = songsColumns(hideRating)
   const { setSongList } = usePlayerActions()
 
   const {

@@ -5,12 +5,14 @@ import { HeaderTitle } from '@/app/components/header-title'
 import { DataTableList } from '@/app/components/ui/data-table-list'
 import { useFavoriteSongs } from '@/app/hooks/use-favorite-songs'
 import { songsColumns } from '@/app/tables/songs-columns'
+import { useAppPages } from '@/store/app.store'
 import { usePlayerActions } from '@/store/player.store'
 import { ColumnFilter } from '@/types/columnFilter'
 
 export default function SongList() {
   const { t } = useTranslation()
-  const columns = songsColumns()
+  const { hideRating } = useAppPages()
+  const columns = songsColumns(hideRating)
   const { setSongList } = usePlayerActions()
 
   const { data, isLoading } = useFavoriteSongs()

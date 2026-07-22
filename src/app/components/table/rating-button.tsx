@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { RatingStars } from '@/app/components/ui/rating-stars'
-import { useRefreshFavorites } from '@/app/hooks/use-refresh-favorites'
+import { useRefreshUserRatings } from '@/app/hooks/use-refresh-user-ratings'
 import { subsonic } from '@/service/subsonic'
 import { usePlayerActions, usePlayerSonglist } from '@/store/player.store'
 
@@ -16,7 +16,7 @@ export function TableRatingButton({
   const [rating, setRating] = useState(userRating)
   const { currentSong } = usePlayerSonglist()
   const { rateCurrentSong, rateSongInQueue } = usePlayerActions()
-  const { refreshFavorites } = useRefreshFavorites()
+  const { refreshUserRatings } = useRefreshUserRatings()
 
   // Keep the row in sync when the rating of the playing track changes
   useEffect(() => {
@@ -37,7 +37,7 @@ export function TableRatingButton({
     }
 
     setRating(value)
-    refreshFavorites()
+    refreshUserRatings()
   }
 
   return <RatingStars value={rating} onChange={handleRate} />

@@ -5,7 +5,7 @@ import {
   MainSidebarMenu,
   MainSidebarMenuItem,
 } from '@/app/components/ui/main-sidebar'
-import { libraryItems, SidebarItems } from '@/app/layout/sidebar'
+import { orderLibraryItems, SidebarItems } from '@/app/layout/sidebar'
 import { useAppStore } from '@/store/app.store'
 import { SidebarMainItem } from './main-item'
 import { SidebarPodcastItem } from './podcast-item'
@@ -19,6 +19,7 @@ export function NavLibrary() {
   const hideFavoritesSection = useAppStore().pages.hideFavoritesSection
   const hidePlaylistsSection = useAppStore().pages.hidePlaylistsSection
   const hideRadiosSection = useAppStore().pages.hideRadiosSection
+  const librarySectionsOrder = useAppStore().pages.librarySectionsOrder
   const isPodcastsActive = useAppStore().podcasts.active
 
   const isAllSectionsHidden = useAppStore().pages.isAllSectionsHidden()
@@ -29,7 +30,7 @@ export function NavLibrary() {
     <MainSidebarGroup className="px-4 py-0">
       <MainSidebarGroupLabel>{t('sidebar.library')}</MainSidebarGroupLabel>
       <MainSidebarMenu>
-        {libraryItems.map((item) => {
+        {orderLibraryItems(librarySectionsOrder).map((item) => {
           // Settings to show/hide library sections
           if (hideArtistsSection && item.id === SidebarItems.Artists)
             return null

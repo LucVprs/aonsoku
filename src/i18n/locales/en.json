@@ -731,7 +731,8 @@
     "content": {
       "sidebar": {
         "group": "Sidebar",
-        "description": "Show or hide sections in the sidebar."
+        "description": "Show, hide, and reorder the sidebar sections. This order is also used for the search results.",
+        "reorder": "Drag to reorder"
       },
       "features": {
         "group": "Features",

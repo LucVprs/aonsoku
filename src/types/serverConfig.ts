@@ -33,6 +33,8 @@ interface IAppPages {
   setHidePlaylistsSection: (value: boolean) => void
   hideRadiosSection: boolean
   setHideRadiosSection: (value: boolean) => void
+  librarySectionsOrder: string[]
+  setLibrarySectionsOrder: (order: string[]) => void
   artistsPageViewType: PageViewType
   setArtistsPageViewType: (type: PageViewType) => void
   imagesCacheLayerEnabled: boolean

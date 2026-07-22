@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { SearchIcon } from 'lucide-react'
-import { KeyboardEvent, useCallback, useState } from 'react'
+import { KeyboardEvent, ReactNode, useCallback, useState } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
 import { useTranslation } from 'react-i18next'
 import { useDebouncedCallback } from 'use-debounce'
@@ -15,6 +15,7 @@ import {
 } from '@/app/components/ui/command'
 import { useMainSidebar } from '@/app/components/ui/main-sidebar'
 import { ScrollArea } from '@/app/components/ui/scroll-area'
+import { orderLibraryItems, SidebarItems } from '@/app/layout/sidebar'
 import { subsonic } from '@/service/subsonic'
 import { useAppStore } from '@/store/app.store'
 import { byteLength } from '@/utils/byteLength'
@@ -32,6 +33,13 @@ import { CommandThemes } from './themes'
 export type CommandItemProps = {
   runCommand: (command: () => unknown) => void
 }
+
+// Sidebar sections that also appear as search result groups.
+const SEARCH_SECTION_IDS: SidebarItems[] = [
+  SidebarItems.Artists,
+  SidebarItems.Albums,
+  SidebarItems.Songs,
+]
 
 export default function CommandMenu() {
   const { t } = useTranslation()
@@ -61,6 +69,10 @@ export default function CommandMenu() {
     staleTime: convertMinutesToMs(5),
   })
 
+  const librarySectionsOrder = useAppStore(
+    (state) => state.pages.librarySectionsOrder,
+  )
+
   const albums = searchResult?.album ?? []
   const artists = searchResult?.artist ?? []
   const songs = searchResult?.song ?? []
@@ -68,6 +80,11 @@ export default function CommandMenu() {
   const showAlbumGroup = Boolean(query && albums.length > 0)
   const showArtistGroup = Boolean(query && artists.length > 0)
   const showSongGroup = Boolean(query && songs.length > 0)
+
+  // The search sections share their relative order with the sidebar sections.
+  const searchSectionsOrder = orderLibraryItems(librarySectionsOrder)
+    .map((item) => item.id)
+    .filter((id) => SEARCH_SECTION_IDS.includes(id as SidebarItems))
 
   useHotkeys(['/', 'mod+f', 'mod+k'], () => setOpen(!open), {
     preventDefault: true,
@@ -123,6 +140,32 @@ export default function CommandMenu() {
     enableQuery && !showAlbumGroup && !showArtistGroup && !showSongGroup,
   )
 
+  const searchGroups: Record<string, ReactNode> = {
+    [SidebarItems.Artists]: showArtistGroup && (
+      <CommandArtistResult
+        key={SidebarItems.Artists}
+        artists={artists}
+        runCommand={runCommand}
+      />
+    ),
+    [SidebarItems.Albums]: showAlbumGroup && (
+      <CommandAlbumResult
+        key={SidebarItems.Albums}
+        query={query}
+        albums={albums}
+        runCommand={runCommand}
+      />
+    ),
+    [SidebarItems.Songs]: showSongGroup && (
+      <CommandSongResult
+        key={SidebarItems.Songs}
+        query={query}
+        songs={songs}
+        runCommand={runCommand}
+      />
+    ),
+  }
+
   const sidebarOpen = sidebarState === 'expanded'
 
   return (
@@ -174,28 +217,7 @@ export default function CommandMenu() {
                 </div>
               )}
 
-              {showAlbumGroup && (
-                <CommandAlbumResult
-                  query={query}
-                  albums={albums}
-                  runCommand={runCommand}
-                />
-              )}
-
-              {showSongGroup && (
-                <CommandSongResult
-                  query={query}
-                  songs={songs}
-                  runCommand={runCommand}
-                />
-              )}
-
-              {showArtistGroup && (
-                <CommandArtistResult
-                  artists={artists}
-                  runCommand={runCommand}
-                />
-              )}
+              {searchSectionsOrder.map((sectionId) => searchGroups[sectionId])}
 
               {isHome && (
                 <CommandHome

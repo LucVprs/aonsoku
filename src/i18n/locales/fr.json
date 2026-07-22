@@ -439,7 +439,8 @@
       },
       "sidebar": {
         "group": "Barre latérale",
-        "description": "Afficher ou masquer des sections dans la barre latérale."
+        "description": "Afficher, masquer et réorganiser les sections de la barre latérale. Cet ordre est également utilisé pour les résultats de recherche.",
+        "reorder": "Glisser pour réorganiser"
       },
       "caches": {
         "images": {

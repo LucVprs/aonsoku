@@ -1,11 +1,11 @@
 import { useRefreshSongLists } from '@/app/hooks/use-refresh-song-lists'
 
-export function useRefreshFavorites() {
+export function useRefreshUserRatings() {
   const { refreshSongLists } = useRefreshSongLists()
 
-  const refreshFavorites = () => {
+  const refreshUserRatings = () => {
     refreshSongLists()
   }
 
-  return { refreshFavorites }
+  return { refreshUserRatings }
 }

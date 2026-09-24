@@ -6,6 +6,7 @@ import { shallow } from 'zustand/shallow'
 import { createWithEqualityFn } from 'zustand/traditional'
 import { pingServer } from '@/api/pingServer'
 import { queryServerInfo } from '@/api/queryServerInfo'
+import { defaultLibrarySectionsOrder } from '@/app/layout/sidebar'
 import { AuthType, IAppContext, IServerConfig } from '@/types/serverConfig'
 import { isDesktop } from '@/utils/desktop'
 import { discordRpc } from '@/utils/discordRpc'
@@ -198,6 +199,12 @@ export const useAppStore = createWithEqualityFn<IAppContext>()(
             setHideRadiosSection: (value) => {
               set((state) => {
                 state.pages.hideRadiosSection = value
+              })
+            },
+            librarySectionsOrder: defaultLibrarySectionsOrder,
+            setLibrarySectionsOrder: (order) => {
+              set((state) => {
+                state.pages.librarySectionsOrder = order
               })
             },
             artistsPageViewType: 'table',

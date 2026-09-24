@@ -117,3 +117,46 @@ export const podcastItems = [
     icon: () => null,
   },
 ]
+
+export const defaultLibrarySectionsOrder = libraryItems.map((item) => item.id)
+
+// Reconciles a stored order with the canonical libraryItems: keeps only known
+// ids (in the stored order), then appends any canonical items missing from it.
+// Guarantees a complete, valid list even if sections are added or removed later.
+export function orderLibraryItems(order: string[] | undefined): ISidebarItem[] {
+  const known = new Map<string, ISidebarItem>(
+    libraryItems.map((item) => [item.id, item]),
+  )
+  const seen = new Set<string>()
+  const ordered: ISidebarItem[] = []
+
+  for (const id of order ?? []) {
+    const item = known.get(id)
+    if (item && !seen.has(id)) {
+      ordered.push(item)
+      seen.add(id)
+    }
+  }
+
+  for (const item of libraryItems) {
+    if (!seen.has(item.id)) {
+      ordered.push(item)
+    }
+  }
+
+  return ordered
+}
+
+// Merges a reordered subset of visible sections back into the full order,
+// keeping every non-visible (hidden) section at its absolute position.
+// `visibleOrder` must contain exactly the ids currently visible, in their new
+// relative order (e.g. the result of a drag-and-drop reorder).
+export function applyVisibleSectionsOrder(
+  fullOrder: string[],
+  visibleOrder: string[],
+): string[] {
+  const visible = new Set(visibleOrder)
+  let cursor = 0
+
+  return fullOrder.map((id) => (visible.has(id) ? visibleOrder[cursor++] : id))
+}

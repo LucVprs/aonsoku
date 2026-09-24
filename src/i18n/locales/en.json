@@ -443,6 +443,7 @@
       },
       "like": "Like {{song}} by {{artist}}",
       "dislike": "Remove like from {{song}} by {{artist}}",
+      "rate": "Rate {{song}} by {{artist}}",
       "miniPlayer": {
         "open": "Open Miniplayer",
         "close": "Close Miniplayer"

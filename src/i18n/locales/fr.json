@@ -357,6 +357,7 @@
       "play": "Lecture",
       "like": "Ajouter {{song}} de {{artist}} aux favoris",
       "dislike": "Enlever {{song}} de {{artist}} des favoris",
+      "rate": "Classer {{song}} de {{artist}}",
       "forward": "Avancer de {{amount}} secondes",
       "miniPlayer": {
         "open": "Ouvrir le lecteur réduit",

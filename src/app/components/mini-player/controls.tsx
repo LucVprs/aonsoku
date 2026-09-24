@@ -9,8 +9,8 @@ import {
   SkipForward,
 } from 'lucide-react'
 import RepeatOne from '@/app/components/icons/repeat-one'
+import { PlayerRatingButton } from '@/app/components/player/rating-button'
 import { Button } from '@/app/components/ui/button'
-import { RatingStars } from '@/app/components/ui/rating-stars'
 import { cn } from '@/lib/utils'
 import { useAppPages } from '@/store/app.store'
 import {
@@ -20,7 +20,6 @@ import {
   usePlayerPrevAndNext,
   usePlayerShuffle,
   usePlayerSongStarred,
-  usePlayerStore,
 } from '@/store/player.store'
 import { LoopState } from '@/types/playerContext'
 
@@ -152,21 +151,24 @@ export function MiniPlayerLikeButton() {
   )
 }
 
-export function MiniPlayerRatingStars() {
-  // Rating of the track currently playing
-  const userRating = usePlayerStore(
-    (state) => state.songlist.currentSong.userRating ?? 0,
-  )
-  const { rateCurrentSong } = usePlayerActions()
+export function MiniPlayerRatingButton() {
   const { hideRating } = useAppPages()
 
   if (hideRating) return null
 
   return (
-    <RatingStars
-      value={userRating}
-      onChange={rateCurrentSong}
-      className="p-[9px] mini-player:hidden"
+    <PlayerRatingButton
+      className={clsx(
+        buttonsStyle.secondary,
+        buttonsStyle.removeRing,
+        // Keep the hover scale while the stars are open, otherwise the
+        // button shrinks when the cursor leaves it and the popup moves down
+        'data-[state=open]:scale-110',
+        'mini-player:hidden',
+      )}
+      style={{ ...buttonsStyle.style }}
+      iconClassName="w-[18px] h-[18px]"
+      showTooltip={false}
     />
   )
 }

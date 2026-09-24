@@ -5,7 +5,7 @@ import { useSongColor } from '@/store/player.store'
 import {
   MiniPlayerControls,
   MiniPlayerLikeButton,
-  MiniPlayerRatingStars,
+  MiniPlayerRatingButton,
 } from './controls'
 import { MiniPlayerProgress } from './progress'
 import { MiniPlayerSongImage } from './song-image'
@@ -14,7 +14,7 @@ import { MiniPlayerVolume } from './volume'
 
 const MemoMiniPlayerControls = memo(MiniPlayerControls)
 const MemoMiniPlayerLikeButton = memo(MiniPlayerLikeButton)
-const MemoMiniPlayerRatingStars = memo(MiniPlayerRatingStars)
+const MemoMiniPlayerRatingButton = memo(MiniPlayerRatingButton)
 const MemoMiniPlayerProgress = memo(MiniPlayerProgress)
 const MemoMiniPlayerSongImage = memo(MiniPlayerSongImage)
 const MemoMiniPlayerSongTitle = memo(MiniPlayerSongTitle)
@@ -79,7 +79,7 @@ export function MiniPlayer() {
           )}
         >
           <MemoMiniPlayerSongTitle />
-          <MemoMiniPlayerRatingStars />
+          <MemoMiniPlayerRatingButton />
           <MemoMiniPlayerLikeButton />
         </div>
         <div className="hidden mini-player:flex">

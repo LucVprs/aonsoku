@@ -156,7 +156,7 @@ export function songsColumns(hideRating: boolean): ColumnDefType<ISong>[] {
       sortingFn: 'basic',
       header: ({ column, table }) => (
         <MemoSimpleTooltip text={i18n.t('table.columns.duration')}>
-          <div>
+          <div className="w-full">
             <MemoDataTableColumnHeader column={column} table={table}>
               <ClockIcon className="w-4 h-4" />
             </MemoDataTableColumnHeader>
@@ -249,15 +249,22 @@ export function songsColumns(hideRating: boolean): ColumnDefType<ISong>[] {
       : ([
           {
             id: 'userRating',
-            accessorKey: 'userRating',
+            // Unrated songs are treated as 0 so they sort below rated ones
+            accessorFn: (song) => song.userRating ?? 0,
             style: {
               width: 180,
               maxWidth: 180,
             },
             className: 'hidden lg:flex',
-            header: () => (
+            enableSorting: true,
+            sortingFn: 'basic',
+            header: ({ column, table }) => (
               <MemoSimpleTooltip text={i18n.t('table.columns.rating')}>
-                <StarIcon className="w-4 h-4 mr-2" />
+                <div className="w-full">
+                  <MemoDataTableColumnHeader column={column} table={table}>
+                    <StarIcon className="w-4 h-4" />
+                  </MemoDataTableColumnHeader>
+                </div>
               </MemoSimpleTooltip>
             ),
             cell: ({ row }) => (

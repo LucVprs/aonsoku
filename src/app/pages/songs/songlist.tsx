@@ -9,11 +9,19 @@ import { ExpandableSearchInput } from '@/app/components/search/expandable-input'
 import { DataTableList } from '@/app/components/ui/data-table-list'
 import { useTotalSongs } from '@/app/hooks/use-total-songs'
 import { songsColumns } from '@/app/tables/songs-columns'
-import { getArtistAllSongs, songsSearch } from '@/queries/songs'
+import {
+  getArtistAllSongs,
+  getArtistRatedSongs,
+  songsSearch,
+} from '@/queries/songs'
 import { useAppPages } from '@/store/app.store'
 import { usePlayerActions } from '@/store/player.store'
 import { ColumnFilter } from '@/types/columnFilter'
-import { AlbumsFilters, AlbumsSearchParams } from '@/utils/albumsFilter'
+import {
+  AlbumsFilters,
+  AlbumsSearchParams,
+  SongsFilters,
+} from '@/utils/albumsFilter'
 import { queryKeys } from '@/utils/queryKeys'
 import { SearchParamsHandler } from '@/utils/searchParamsHandler'
 
@@ -34,9 +42,14 @@ export default function SongList() {
 
   const searchFilterIsSet = filter === AlbumsFilters.Search && query !== ''
   const filterByArtist = artistId !== '' && artistName !== ''
+  const filterByArtistRating = filterByArtist && filter === SongsFilters.Rated
   const hasSomeFilter = searchFilterIsSet || filterByArtist
 
   async function fetchSongs({ pageParam = 0 }) {
+    if (filterByArtistRating) {
+      return getArtistRatedSongs(artistId)
+    }
+
     if (filterByArtist) {
       return getArtistAllSongs(artistId)
     }
@@ -88,9 +101,19 @@ export default function SongList() {
     'select',
   ]
 
-  const title = filterByArtist
-    ? t('songs.list.byArtist', { artist: artistName })
-    : t('sidebar.songs')
+  function getTitle() {
+    if (filterByArtistRating) {
+      return t('songs.list.ratedByArtist', { artist: artistName })
+    }
+
+    if (filterByArtist) {
+      return t('songs.list.byArtist', { artist: artistName })
+    }
+
+    return t('sidebar.songs')
+  }
+
+  const title = getTitle()
 
   return (
     <div className="w-full h-content">

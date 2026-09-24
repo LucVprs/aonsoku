@@ -49,6 +49,28 @@ export async function getArtistAllSongs(artistId: string) {
   }
 }
 
+export async function getArtistRatedSongs(artistId: string) {
+  const { songs } = await getArtistAllSongs(artistId)
+
+  // Unrated songs are excluded, the best rated come first,
+  // songs with the same rating are sorted alphabetically
+  const ratedSongs = songs
+    .filter((song) => (song.userRating ?? 0) > 0)
+    .sort((first, second) => {
+      const ratingDifference = (second.userRating ?? 0) - (first.userRating ?? 0)
+      if (ratingDifference !== 0) return ratingDifference
+
+      return first.title.localeCompare(second.title, undefined, {
+        sensitivity: 'base',
+      })
+    })
+
+  return {
+    songs: ratedSongs,
+    nextOffset: null,
+  }
+}
+
 export async function getFavoriteSongs() {
   const response = await subsonic.songs.getFavoriteSongs()
 

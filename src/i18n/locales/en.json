@@ -136,6 +136,7 @@
         "placeholder": "Search songs…"
       },
       "byArtist": "Songs by {{artist}}",
+      "ratedByArtist": "Rated songs by {{artist}}",
       "filter": {
         "clear": "Clear filter"
       }
@@ -222,6 +223,7 @@
       "albumsCount_other": "{{count}} albums"
     },
     "topSongs": "Popular",
+    "ratedSongs": "Top rated",
     "recentAlbums": "Recent albums",
     "relatedArtists": "Related artists"
   },

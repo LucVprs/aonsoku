@@ -1,5 +1,5 @@
 import { AlbumListType } from '@/types/responses/album'
-import { AlbumsFilters, YearFilter } from '@/utils/albumsFilter'
+import { AlbumsFilters, SongsFilters, YearFilter } from '@/utils/albumsFilter'
 
 const LIBRARY = {
   HOME: '/',
@@ -45,6 +45,8 @@ const SONGS = {
     `${LIBRARY.SONGS}?filter=${AlbumsFilters.Search}&query=${encodeURIComponent(query)}`,
   ARTIST_TRACKS: (id: string, name: string) =>
     `${LIBRARY.SONGS}?artistId=${id}&artistName=${encodeURIComponent(name)}`,
+  ARTIST_RATED_TRACKS: (id: string, name: string) =>
+    `${LIBRARY.SONGS}?filter=${SongsFilters.Rated}&artistId=${id}&artistName=${encodeURIComponent(name)}`,
 }
 
 const FAVORITES = {

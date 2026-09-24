@@ -21,6 +21,7 @@ const artist = {
   single: 'get-artist',
   info: 'get-artist-info',
   topSongs: 'get-artist-top-songs',
+  ratedSongs: 'get-artist-rated-songs',
 }
 
 const favorites = {

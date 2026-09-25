@@ -27,10 +27,10 @@ export const useGetTopSongs = (artistName?: string) => {
   })
 }
 
-export const useGetArtistRatedSongs = (artistId: string) => {
+export const useGetArtistRatedSongs = (artistId: string, enabled: boolean) => {
   return useQuery({
     queryKey: [queryKeys.artist.ratedSongs, artistId],
     queryFn: () => getArtistRatedSongs(artistId),
-    enabled: !!artistId,
+    enabled: !!artistId && enabled,
   })
 }

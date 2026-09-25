@@ -37,6 +37,7 @@ export enum AlbumsFilters {
 }
 
 export enum SongsFilters {
+  Top = 'top',
   Rated = 'rated',
 }
 

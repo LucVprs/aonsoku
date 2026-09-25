@@ -1,8 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
 import ImageHeader from '@/app/components/album/image-header'
-import ArtistRatedSongs from '@/app/components/artist/artist-rated-songs'
-import ArtistTopSongs from '@/app/components/artist/artist-top-songs'
+import ArtistSongsTabs from '@/app/components/artist/artist-songs-tabs'
 import { ArtistInfo } from '@/app/components/artist/info'
 import RelatedArtistsList from '@/app/components/artist/related-artists'
 import { ArtistStickyHeader } from '@/app/components/artist/sticky-header'
@@ -15,6 +14,7 @@ import ListWrapper from '@/app/components/list-wrapper'
 import {
   useGetArtist,
   useGetArtistInfo,
+  useGetArtistRatedSongs,
   useGetTopSongs,
 } from '@/app/hooks/use-artist'
 import ErrorPage from '@/app/pages/error-page'
@@ -37,6 +37,8 @@ export default function Artist() {
     artist?.name,
   )
   const { hideRating } = useAppPages()
+  const { data: ratedSongs, isLoading: ratedSongsIsLoading } =
+    useGetArtistRatedSongs(artistId, !hideRating)
 
   if (artistIsLoading) return <AlbumFallback />
   if (isFetched && !artist) {
@@ -101,11 +103,15 @@ export default function Artist() {
       <ListWrapper>
         <ArtistInfo artist={artist} />
 
-        {!hideRating && <ArtistRatedSongs artist={artist} />}
-
-        {topSongsIsLoading && <TopSongsTableFallback />}
-        {topSongs && !topSongsIsLoading && (
-          <ArtistTopSongs topSongs={topSongs} artist={artist} />
+        {(topSongsIsLoading || ratedSongsIsLoading) && (
+          <TopSongsTableFallback />
+        )}
+        {!topSongsIsLoading && !ratedSongsIsLoading && (
+          <ArtistSongsTabs
+            topSongs={topSongs}
+            ratedSongs={ratedSongs?.songs}
+            artist={artist}
+          />
         )}
 
         {recentAlbums.length > 0 && (

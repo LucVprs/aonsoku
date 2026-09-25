@@ -49,6 +49,17 @@ export async function getArtistAllSongs(artistId: string) {
   }
 }
 
+export async function getArtistTopSongs(artistName: string) {
+  const response = await subsonic.songs.getTopSongs(artistName)
+
+  if (!response) return { songs: [] }
+
+  return {
+    songs: response,
+    nextOffset: null,
+  }
+}
+
 export async function getArtistRatedSongs(artistId: string) {
   const { songs } = await getArtistAllSongs(artistId)
 

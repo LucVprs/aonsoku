@@ -45,6 +45,8 @@ const SONGS = {
     `${LIBRARY.SONGS}?filter=${AlbumsFilters.Search}&query=${encodeURIComponent(query)}`,
   ARTIST_TRACKS: (id: string, name: string) =>
     `${LIBRARY.SONGS}?artistId=${id}&artistName=${encodeURIComponent(name)}`,
+  ARTIST_TOP_TRACKS: (id: string, name: string) =>
+    `${LIBRARY.SONGS}?filter=${SongsFilters.Top}&artistId=${id}&artistName=${encodeURIComponent(name)}`,
   ARTIST_RATED_TRACKS: (id: string, name: string) =>
     `${LIBRARY.SONGS}?filter=${SongsFilters.Rated}&artistId=${id}&artistName=${encodeURIComponent(name)}`,
 }

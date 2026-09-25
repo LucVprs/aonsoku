@@ -11,6 +11,7 @@ import { useTotalSongs } from '@/app/hooks/use-total-songs'
 import { songsColumns } from '@/app/tables/songs-columns'
 import {
   getArtistAllSongs,
+  getArtistTopSongs,
   getArtistRatedSongs,
   songsSearch,
 } from '@/queries/songs'
@@ -42,10 +43,15 @@ export default function SongList() {
 
   const searchFilterIsSet = filter === AlbumsFilters.Search && query !== ''
   const filterByArtist = artistId !== '' && artistName !== ''
+  const filterByArtistTop = filterByArtist && filter === SongsFilters.Top
   const filterByArtistRating = filterByArtist && filter === SongsFilters.Rated
   const hasSomeFilter = searchFilterIsSet || filterByArtist
 
   async function fetchSongs({ pageParam = 0 }) {
+    if (filterByArtistTop) {
+      return getArtistTopSongs(artistName)
+    }
+
     if (filterByArtistRating) {
       return getArtistRatedSongs(artistId)
     }

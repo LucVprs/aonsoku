@@ -12,6 +12,7 @@ export function useRefreshSongLists() {
       queryKeys.playlist.single,
       queryKeys.artist.topSongs,
       queryKeys.artist.ratedSongs,
+      queryKeys.artist.notableSongs
     ]
 
     songListKeys.forEach((queryKey) => {

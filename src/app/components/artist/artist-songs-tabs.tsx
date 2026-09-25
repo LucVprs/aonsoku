@@ -34,16 +34,20 @@ export default function ArtistSongsTabs({
 }: ArtistSongsTabsProps) {
   const { t } = useTranslation()
   const { hideRating } = useAppPages()
-  const [tab, setTab] = useState<SongsTab>(SongsTab.Rated)
-  const { id, name } = artist
 
   const hasTopSongs = !!topSongs && topSongs.length > 0
   const hasRatedSongs = !hideRating && !!ratedSongs && ratedSongs.length > 0
 
+  const [activeTab, setTab] = useState<SongsTab>(hasRatedSongs ? SongsTab.Rated : SongsTab.Top)
+
   if ( !hasRatedSongs && !hasTopSongs )
     return null;
 
-  const activeTab = hasRatedSongs ? tab : SongsTab.Top
+  const { id, name } = artist
+
+  if (activeTab === SongsTab.Rated && !hasRatedSongs)
+    setTab(SongsTab.Top)
+
   const viewAllRoute =
     activeTab === SongsTab.Top
       ? ROUTES.SONGS.ARTIST_TOP_TRACKS(id, name)

@@ -263,7 +263,8 @@
       "filter": {
         "clear": "Supprimer le filtre"
       },
-      "byArtist": "Titres de {{artist}}"
+      "byArtist": "Titres de {{artist}}",
+      "ratedByArtist": "Titres classés de {{artist}}"
     }
   },
   "favorites": {
@@ -273,6 +274,7 @@
     "recentAlbums": "Albums récents",
     "relatedArtists": "Artistes similaires",
     "topSongs": "Populaire",
+    "ratedSongs": "Mieux notés",
     "buttons": {
       "play": "Écouter la radio de {{artist}}",
       "shuffle": "Écouter la radio de {{artist}} en aléatoire",

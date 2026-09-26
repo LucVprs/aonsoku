@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
+import { getArtistRatedSongs } from '@/queries/songs'
 import { subsonic } from '@/service/subsonic'
 import { queryKeys } from '@/utils/queryKeys'
 
@@ -23,5 +24,13 @@ export const useGetTopSongs = (artistName?: string) => {
     queryKey: [queryKeys.artist.topSongs, artistName],
     queryFn: () => subsonic.songs.getTopSongs(artistName ?? ''),
     enabled: !!artistName,
+  })
+}
+
+export const useGetArtistRatedSongs = (artistId: string) => {
+  return useQuery({
+    queryKey: [queryKeys.artist.ratedSongs, artistId],
+    queryFn: () => getArtistRatedSongs(artistId),
+    enabled: !!artistId,
   })
 }

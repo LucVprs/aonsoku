@@ -36,6 +36,10 @@ export enum AlbumsFilters {
   Search = 'search',
 }
 
+export enum SongsFilters {
+  Rated = 'rated',
+}
+
 export const albumsFilterValues = [
   {
     key: AlbumsFilters.ByArtist,

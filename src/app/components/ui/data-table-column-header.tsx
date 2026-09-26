@@ -56,11 +56,11 @@ export function DataTableColumnHeader<TData, TValue>({
   }
 
   return (
-    <div className={cn('flex items-center space-x-2', className)}>
+    <div className={cn('flex items-center w-full', className)}>
       <Button
         variant="ghost"
         size="sm"
-        className="px-0 h-8 group hover:bg-transparent transition-all duration-150"
+        className="px-0 h-8 w-full justify-start group hover:bg-transparent transition-all duration-150"
         onClick={handleFilter}
       >
         {typeof children === 'string' ? (

@@ -32,6 +32,7 @@ import { PodcastInfo } from './podcast-info'
 import { PodcastPlaybackRate } from './podcast-playback-rate'
 import { PlayerProgress } from './progress'
 import { PlayerQueueButton } from './queue-button'
+import { PlayerRatingButton } from './rating-button'
 import { PlayerVolume } from './volume'
 
 const MemoTrackInfo = memo(TrackInfo)
@@ -40,6 +41,7 @@ const MemoPodcastInfo = memo(PodcastInfo)
 const MemoPlayerControls = memo(PlayerControls)
 const MemoPlayerProgress = memo(PlayerProgress)
 const MemoPlayerLikeButton = memo(PlayerLikeButton)
+const MemoPlayerRatingButton = memo(PlayerRatingButton)
 const MemoPlayerQueueButton = memo(PlayerQueueButton)
 const MemoPlayerClearQueueButton = memo(PlayerClearQueueButton)
 const MemoPlayerVolume = memo(PlayerVolume)
@@ -50,6 +52,7 @@ const MemoMiniPlayerButton = memo(MiniPlayerButton)
 
 export function Player() {
   const hideFavoritesSection = useAppStore().pages.hideFavoritesSection
+  const hideRating = useAppStore().pages.hideRating
   const audioRef = useRef<HTMLAudioElement>(null)
   const radioRef = useRef<HTMLAudioElement>(null)
   const podcastRef = useRef<HTMLAudioElement>(null)
@@ -239,6 +242,9 @@ export function Player() {
               <>
                 <MemoPlayerLikeButton disabled={!song} />
               </>
+            )}
+            {isSong && !hideRating && (
+              <MemoPlayerRatingButton disabled={!song} />
             )}
             {isSong && (
               <>

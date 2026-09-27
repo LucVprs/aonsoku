@@ -22,6 +22,7 @@ const artist = {
   info: 'get-artist-info',
   topSongs: 'get-artist-top-songs',
   ratedSongs: 'get-artist-rated-songs',
+  notableSongs: 'get-artist-notable-songs',
 }
 
 const favorites = {

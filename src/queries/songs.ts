@@ -89,3 +89,16 @@ export async function getFavoriteSongs() {
 
   return { songs: response.song }
 }
+
+export async function getArtistNotableSongs (artistId: string, artistName: string , includeRated: boolean) {
+  const [topSongs, ratedSongs] = await Promise.all([
+    getArtistTopSongs(artistName).then(({songs}) => songs),
+    includeRated ? getArtistRatedSongs(artistId).then(({songs}) => songs) : Promise.resolve([])
+  ])
+
+  return {
+    topSongs: topSongs ?? [],
+    ratedSongs: ratedSongs ?? [],
+    nextOffset: null,
+  }
+}

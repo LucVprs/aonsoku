@@ -14,8 +14,7 @@ import ListWrapper from '@/app/components/list-wrapper'
 import {
   useGetArtist,
   useGetArtistInfo,
-  useGetArtistRatedSongs,
-  useGetTopSongs,
+  useGetArtistNotableSongs,
 } from '@/app/hooks/use-artist'
 import ErrorPage from '@/app/pages/error-page'
 import { ROUTES } from '@/routes/routesList'
@@ -31,14 +30,10 @@ export default function Artist() {
     isLoading: artistIsLoading,
     isFetched,
   } = useGetArtist(artistId)
-  const { data: artistInfo, isLoading: artistInfoIsLoading } =
-    useGetArtistInfo(artistId)
-  const { data: topSongs, isLoading: topSongsIsLoading } = useGetTopSongs(
-    artist?.name,
-  )
+  const { data: artistInfo, isLoading: artistInfoIsLoading } = useGetArtistInfo(artistId)
   const { hideRating } = useAppPages()
-  const { data: ratedSongs, isLoading: ratedSongsIsLoading } =
-    useGetArtistRatedSongs(artistId, !hideRating)
+
+  const { data: notableSongs, isLoading: notableSongsAreLoading } = useGetArtistNotableSongs(artistId, artist?.name, !hideRating)
 
   if (artistIsLoading) return <AlbumFallback />
   if (isFetched && !artist) {
@@ -103,13 +98,13 @@ export default function Artist() {
       <ListWrapper>
         <ArtistInfo artist={artist} />
 
-        {(topSongsIsLoading || ratedSongsIsLoading) && (
+        {(notableSongsAreLoading) && (
           <TopSongsTableFallback />
         )}
-        {!topSongsIsLoading && !ratedSongsIsLoading && (
+        {!notableSongsAreLoading && notableSongs && (
           <ArtistSongsTabs
-            topSongs={topSongs}
-            ratedSongs={ratedSongs?.songs}
+            topSongs={notableSongs.topSongs}
+            ratedSongs={notableSongs.ratedSongs}
             artist={artist}
           />
         )}
